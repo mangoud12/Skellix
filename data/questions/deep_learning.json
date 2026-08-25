@@ -1,0 +1,142 @@
+[
+  {
+    "id": "dl_001",
+    "skill_slug": "deep_learning",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is the basic building block of a neural network?",
+    "options": ["Kernel", "Neuron (Perceptron)", "Decision Node", "Embedding"],
+    "answer": "Neuron (Perceptron)",
+    "explanation": "A neuron computes a weighted sum of its inputs, adds a bias, and passes the result through an activation function."
+  },
+  {
+    "id": "dl_002",
+    "skill_slug": "deep_learning",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "Which activation function outputs values strictly between 0 and 1?",
+    "options": ["ReLU", "Tanh", "Sigmoid", "Leaky ReLU"],
+    "answer": "Sigmoid",
+    "explanation": "Sigmoid $$\\sigma(x) = \\frac{1}{1+e^{-x}}$$ squashes any real value to the range (0,1)."
+  },
+  {
+    "id": "dl_003",
+    "skill_slug": "deep_learning",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is backpropagation?",
+    "options": [
+      "A forward pass through the network",
+      "An algorithm that computes gradients by applying the chain rule from output to input",
+      "A technique to initialize network weights",
+      "A method to regularize the network"
+    ],
+    "answer": "An algorithm that computes gradients by applying the chain rule from output to input",
+    "explanation": "Backpropagation efficiently computes the gradient of the loss with respect to every weight using the chain rule of calculus."
+  },
+  {
+    "id": "dl_004",
+    "skill_slug": "deep_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What problem does Batch Normalization primarily address?",
+    "options": [
+      "Overfitting by adding noise to activations",
+      "Internal covariate shift by normalizing layer inputs",
+      "Vanishing gradients by clipping gradients",
+      "Slow training by reducing the number of parameters"
+    ],
+    "answer": "Internal covariate shift by normalizing layer inputs",
+    "explanation": "Batch Normalization normalizes each mini-batch's activations, stabilizing training and allowing higher learning rates."
+  },
+  {
+    "id": "dl_005",
+    "skill_slug": "deep_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "In a Convolutional Neural Network, what does a pooling layer do?",
+    "options": [
+      "Applies a learnable filter to the input",
+      "Introduces non-linearity into the network",
+      "Reduces the spatial dimensions of feature maps",
+      "Normalizes feature map values"
+    ],
+    "answer": "Reduces the spatial dimensions of feature maps",
+    "explanation": "Pooling (e.g., max pooling) downsamples feature maps, reducing computation and providing translation invariance."
+  },
+  {
+    "id": "dl_006",
+    "skill_slug": "deep_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is dropout regularization?",
+    "options": [
+      "Removing neurons with the lowest activation values permanently",
+      "Randomly setting a fraction of neuron outputs to zero during each training step",
+      "Reducing the learning rate progressively",
+      "Clipping gradients to a maximum norm"
+    ],
+    "answer": "Randomly setting a fraction of neuron outputs to zero during each training step",
+    "explanation": "Dropout prevents co-adaptation of neurons, acting as an implicit ensemble and reducing overfitting."
+  },
+  {
+    "id": "dl_007",
+    "skill_slug": "deep_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What distinguishes an LSTM from a vanilla RNN?",
+    "options": [
+      "LSTMs have more hidden layers",
+      "LSTMs use gating mechanisms (forget, input, output gates) to control long-term memory",
+      "LSTMs process sequences in both directions simultaneously",
+      "LSTMs replace recurrence with attention"
+    ],
+    "answer": "LSTMs use gating mechanisms (forget, input, output gates) to control long-term memory",
+    "explanation": "The cell state and gates allow LSTMs to selectively remember or forget information over long sequences, mitigating the vanishing gradient problem."
+  },
+  {
+    "id": "dl_008",
+    "skill_slug": "deep_learning",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the self-attention mechanism in the Transformer architecture?",
+    "options": [
+      "An attention mechanism where each token attends to all other tokens in the sequence to compute contextual representations",
+      "An attention mechanism where the decoder attends to the encoder outputs",
+      "A convolutional filter that spans the full sequence length",
+      "A gating mechanism that replaces the LSTM cell state"
+    ],
+    "answer": "An attention mechanism where each token attends to all other tokens in the sequence to compute contextual representations",
+    "explanation": "Self-attention computes query, key, and value projections for each token, then weights values by query-key similarity, enabling parallelism and capturing long-range dependencies."
+  },
+  {
+    "id": "dl_009",
+    "skill_slug": "deep_learning",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the purpose of skip connections in ResNets?",
+    "options": [
+      "To reduce the total number of parameters",
+      "To allow gradients to flow directly through the network and enable training of very deep models",
+      "To implement attention between layers",
+      "To share weights between different layers"
+    ],
+    "answer": "To allow gradients to flow directly through the network and enable training of very deep models",
+    "explanation": "Skip connections let the gradient bypass layers during backpropagation, addressing the degradation problem in very deep networks."
+  },
+  {
+    "id": "dl_010",
+    "skill_slug": "deep_learning",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "In the context of Generative Adversarial Networks (GANs), what are the generator and discriminator trained to do?",
+    "options": [
+      "Generator minimizes reconstruction loss; discriminator classifies real vs. generated samples",
+      "Generator fools the discriminator by producing realistic samples; discriminator distinguishes real from generated samples",
+      "Both networks are trained to minimize the same loss function",
+      "Generator encodes data; discriminator decodes data"
+    ],
+    "answer": "Generator fools the discriminator by producing realistic samples; discriminator distinguishes real from generated samples",
+    "explanation": "GANs use a minimax game: the generator tries to maximize the discriminator's error while the discriminator minimizes it."
+  }
+]

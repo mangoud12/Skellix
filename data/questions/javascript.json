@@ -1,0 +1,142 @@
+[
+  {
+    "id": "js_001",
+    "skill_slug": "javascript",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is the difference between `let` and `var` in JavaScript?",
+    "options": [
+      "`let` is function-scoped; `var` is block-scoped",
+      "`let` is block-scoped; `var` is function-scoped",
+      "They are identical",
+      "`let` cannot be reassigned; `var` can"
+    ],
+    "answer": "`let` is block-scoped; `var` is function-scoped",
+    "explanation": "`let` (and `const`) are block-scoped (limited to the `{}` block). `var` is function-scoped and is hoisted to the function top."
+  },
+  {
+    "id": "js_002",
+    "skill_slug": "javascript",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What does `===` check in JavaScript?",
+    "options": [
+      "Value equality only",
+      "Reference equality only",
+      "Both value and type equality (strict equality)",
+      "Deep equality of objects"
+    ],
+    "answer": "Both value and type equality (strict equality)",
+    "explanation": "`===` is the strict equality operator; it checks both value and type without type coercion."
+  },
+  {
+    "id": "js_003",
+    "skill_slug": "javascript",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is the output of `typeof null` in JavaScript?",
+    "options": ["'null'", "'undefined'", "'object'", "'boolean'"],
+    "answer": "'object'",
+    "explanation": "`typeof null === 'object'` is a well-known legacy bug in JavaScript. `null` is not actually an object."
+  },
+  {
+    "id": "js_004",
+    "skill_slug": "javascript",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is a closure in JavaScript?",
+    "options": [
+      "A function that runs immediately after being defined",
+      "A function that retains access to its outer lexical scope even after the outer function has returned",
+      "A method to close an event listener",
+      "A way to seal an object and prevent property additions"
+    ],
+    "answer": "A function that retains access to its outer lexical scope even after the outer function has returned",
+    "explanation": "Closures are created every time a function is created, capturing the variables of its enclosing scope."
+  },
+  {
+    "id": "js_005",
+    "skill_slug": "javascript",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What does `Promise.all()` do?",
+    "options": [
+      "Runs promises sequentially and returns the first resolved value",
+      "Runs promises concurrently and resolves when ALL promises resolve, or rejects if any promise rejects",
+      "Runs promises concurrently and resolves with the first settled promise",
+      "Catches errors from multiple promises"
+    ],
+    "answer": "Runs promises concurrently and resolves when ALL promises resolve, or rejects if any promise rejects",
+    "explanation": "`Promise.all()` takes an iterable of promises and returns a single promise that resolves to an array of all results, failing fast on any rejection."
+  },
+  {
+    "id": "js_006",
+    "skill_slug": "javascript",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is event delegation in JavaScript?",
+    "options": [
+      "Attaching an event listener to every child element individually",
+      "Attaching a single event listener to a parent element to handle events from its children using event bubbling",
+      "Preventing events from bubbling up the DOM",
+      "Delegating event handling to a Web Worker"
+    ],
+    "answer": "Attaching a single event listener to a parent element to handle events from its children using event bubbling",
+    "explanation": "Event delegation leverages bubbling: one listener on the parent can handle events from many dynamically-added children."
+  },
+  {
+    "id": "js_007",
+    "skill_slug": "javascript",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the JavaScript event loop?",
+    "options": [
+      "A loop that iterates over DOM elements",
+      "The mechanism that allows JS to perform non-blocking I/O by processing a call stack and a callback queue",
+      "A timer that repeatedly calls a function at set intervals",
+      "A loop that handles errors in async code"
+    ],
+    "answer": "The mechanism that allows JS to perform non-blocking I/O by processing a call stack and a callback queue",
+    "explanation": "The event loop checks if the call stack is empty, then pushes callbacks from the queue (task queue/microtask queue) onto the stack."
+  },
+  {
+    "id": "js_008",
+    "skill_slug": "javascript",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the output of the following code?\n\n```js\nconsole.log(1);\nsetTimeout(() => console.log(2), 0);\nPromise.resolve().then(() => console.log(3));\nconsole.log(4);\n```",
+    "options": ["1, 2, 3, 4", "1, 4, 2, 3", "1, 4, 3, 2", "1, 3, 4, 2"],
+    "answer": "1, 4, 3, 2",
+    "explanation": "Synchronous code runs first (1, 4). Microtasks (Promise) run before macrotasks (setTimeout). So microtask 3 runs before macrotask 2."
+  },
+  {
+    "id": "js_009",
+    "skill_slug": "javascript",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is prototypal inheritance in JavaScript?",
+    "options": [
+      "A class-based inheritance system identical to Java",
+      "An inheritance model where objects directly inherit properties and methods from other objects via the prototype chain",
+      "A mixin-based composition pattern",
+      "Inheritance using the `extends` keyword exclusively"
+    ],
+    "answer": "An inheritance model where objects directly inherit properties and methods from other objects via the prototype chain",
+    "explanation": "Every JS object has an internal `[[Prototype]]` link. Property lookup walks up this chain until the property is found or the chain ends at `null`."
+  },
+  {
+    "id": "js_010",
+    "skill_slug": "javascript",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What does `Object.freeze()` do in JavaScript?",
+    "options": [
+      "Deeply freezes an object and all nested objects",
+      "Makes an object non-extensible (no new properties) but still allows mutation of existing properties",
+      "Shallowly prevents adding, deleting, or modifying any properties on the object",
+      "Converts an object to a frozen string representation"
+    ],
+    "answer": "Shallowly prevents adding, deleting, or modifying any properties on the object",
+    "explanation": "`Object.freeze()` is shallow: it prevents changes to the top-level properties but nested objects remain mutable."
+  }
+]

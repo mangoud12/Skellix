@@ -1,0 +1,147 @@
+[
+  {
+    "id": "react_001",
+    "skill_slug": "react",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is JSX in React?",
+    "options": [
+      "A JavaScript runtime for React",
+      "A syntax extension that allows writing HTML-like markup inside JavaScript",
+      "A state management library",
+      "A CSS-in-JS solution"
+    ],
+    "answer": "A syntax extension that allows writing HTML-like markup inside JavaScript",
+    "explanation": "JSX is transpiled by Babel to `React.createElement()` calls. It is not required but makes component trees more readable."
+  },
+  {
+    "id": "react_002",
+    "skill_slug": "react",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What hook is used to manage state in a functional component?",
+    "options": ["useEffect", "useContext", "useState", "useReducer"],
+    "answer": "useState",
+    "explanation": "`useState` returns a stateful value and a setter function. Calling the setter re-renders the component with the new state."
+  },
+  {
+    "id": "react_003",
+    "skill_slug": "react",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is the virtual DOM in React?",
+    "options": [
+      "A server-side rendering technique",
+      "A lightweight in-memory representation of the real DOM used to compute minimal UI updates",
+      "A shadow DOM implementation",
+      "A DOM API for building web components"
+    ],
+    "answer": "A lightweight in-memory representation of the real DOM used to compute minimal UI updates",
+    "explanation": "React maintains a virtual DOM tree. On state change it diffs the new and old virtual trees (reconciliation) and applies minimal real DOM updates."
+  },
+  {
+    "id": "react_004",
+    "skill_slug": "react",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the dependency array in `useEffect` used for?",
+    "options": [
+      "To list all variables the component depends on for rendering",
+      "To control when the effect runs — it re-runs only when one of the listed dependencies changes",
+      "To declare external packages the effect uses",
+      "To define the order of hook execution"
+    ],
+    "answer": "To control when the effect runs — it re-runs only when one of the listed dependencies changes",
+    "explanation": "An empty `[]` runs the effect once on mount. Listing values causes the effect to re-run whenever those values change."
+  },
+  {
+    "id": "react_005",
+    "skill_slug": "react",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the purpose of the `key` prop when rendering lists?",
+    "options": [
+      "To apply a CSS class to list items",
+      "To give React a stable identity for each list item to optimize reconciliation",
+      "To set the tab order of list items",
+      "To uniquely identify the component to its parent"
+    ],
+    "answer": "To give React a stable identity for each list item to optimize reconciliation",
+    "explanation": "Keys help React identify which items changed, were added, or removed. Using array indices as keys can lead to bugs."
+  },
+  {
+    "id": "react_006",
+    "skill_slug": "react",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What problem does the React Context API solve?",
+    "options": [
+      "Performance optimization through memoization",
+      "Prop drilling — passing data through many component layers without explicit prop passing",
+      "Global error handling in component trees",
+      "Server-side rendering of React components"
+    ],
+    "answer": "Prop drilling — passing data through many component layers without explicit prop passing",
+    "explanation": "Context allows a value to be made available to any component in the tree without manually threading it through props."
+  },
+  {
+    "id": "react_007",
+    "skill_slug": "react",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What does `React.memo()` do?",
+    "options": [
+      "Memoizes the return value of a hook",
+      "Prevents a functional component from re-rendering if its props have not changed (shallow comparison)",
+      "Caches async data fetched inside a component",
+      "Merges component state updates into a single render"
+    ],
+    "answer": "Prevents a functional component from re-rendering if its props have not changed (shallow comparison)",
+    "explanation": "`React.memo` is a higher-order component that wraps a functional component and skips re-rendering when props are shallowly equal."
+  },
+  {
+    "id": "react_008",
+    "skill_slug": "react",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the difference between `useCallback` and `useMemo`?",
+    "options": [
+      "`useCallback` memoizes a function reference; `useMemo` memoizes the result of a computation",
+      "`useMemo` memoizes a function reference; `useCallback` memoizes a computed value",
+      "They are identical — both memoize functions",
+      "`useCallback` is for class components; `useMemo` is for functional components"
+    ],
+    "answer": "`useCallback` memoizes a function reference; `useMemo` memoizes the result of a computation",
+    "explanation": "`useCallback(fn, deps)` returns the same function reference across renders. `useMemo(() => compute(), deps)` returns the cached result of the computation."
+  },
+  {
+    "id": "react_009",
+    "skill_slug": "react",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is React's reconciliation algorithm (the 'diffing' process)?",
+    "options": [
+      "React re-renders the entire real DOM on every state change",
+      "React compares new and old virtual DOM trees and applies the minimum set of changes to the real DOM",
+      "React uses a queue to batch all DOM updates into one per second",
+      "React delegates DOM diffing to the browser's layout engine"
+    ],
+    "answer": "React compares new and old virtual DOM trees and applies the minimum set of changes to the real DOM",
+    "explanation": "React's reconciler uses heuristics (same type assumption, key hints) to diff trees in O(n) rather than the theoretical O(n^3)."
+  },
+  {
+    "id": "react_010",
+    "skill_slug": "react",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the Concurrent Mode / concurrent rendering in React 18?",
+    "options": [
+      "Running React in multiple browser threads simultaneously",
+      "A rendering mode where React can interrupt, pause, and resume rendering work to keep the UI responsive",
+      "A feature that renders server and client components concurrently",
+      "Rendering multiple React apps on the same page at the same time"
+    ],
+    "answer": "A rendering mode where React can interrupt, pause, and resume rendering work to keep the UI responsive",
+    "explanation": "Concurrent rendering makes React rendering interruptible. Features like `startTransition` and Suspense leverage this to prioritize urgent updates."
+  }
+]

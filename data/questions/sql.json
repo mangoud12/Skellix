@@ -1,0 +1,147 @@
+[
+  {
+    "id": "sql_001",
+    "skill_slug": "sql",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "Which SQL clause is used to filter rows returned by a query?",
+    "options": ["HAVING", "WHERE", "GROUP BY", "ORDER BY"],
+    "answer": "WHERE",
+    "explanation": "`WHERE` filters rows before any grouping occurs. `HAVING` filters after grouping."
+  },
+  {
+    "id": "sql_002",
+    "skill_slug": "sql",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What does `SELECT DISTINCT` do?",
+    "options": [
+      "Selects only NULL values",
+      "Selects only the first occurrence of each row",
+      "Removes duplicate rows from the result set",
+      "Selects rows in a different order"
+    ],
+    "answer": "Removes duplicate rows from the result set",
+    "explanation": "`DISTINCT` eliminates duplicate rows from the query result, returning only unique combinations of the selected columns."
+  },
+  {
+    "id": "sql_003",
+    "skill_slug": "sql",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is a PRIMARY KEY in a relational database?",
+    "options": [
+      "A key used to encrypt data",
+      "A column (or set of columns) that uniquely identifies each row in a table",
+      "A foreign key that references another table",
+      "The first column in a table by definition"
+    ],
+    "answer": "A column (or set of columns) that uniquely identifies each row in a table",
+    "explanation": "A PRIMARY KEY enforces uniqueness and NOT NULL on its columns and is used to establish relationships between tables."
+  },
+  {
+    "id": "sql_004",
+    "skill_slug": "sql",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the difference between `INNER JOIN` and `LEFT JOIN`?",
+    "options": [
+      "INNER JOIN returns all rows from both tables; LEFT JOIN returns only matching rows",
+      "INNER JOIN returns only rows with matches in both tables; LEFT JOIN returns all rows from the left table plus matches from the right",
+      "They are identical in result but differ in performance",
+      "LEFT JOIN is used for one-to-many; INNER JOIN is for one-to-one"
+    ],
+    "answer": "INNER JOIN returns only rows with matches in both tables; LEFT JOIN returns all rows from the left table plus matches from the right",
+    "explanation": "LEFT JOIN preserves all left-table rows, filling right-table columns with NULL when no match exists."
+  },
+  {
+    "id": "sql_005",
+    "skill_slug": "sql",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What does the `GROUP BY` clause do?",
+    "options": [
+      "Sorts rows by the specified columns",
+      "Groups rows that share the same values in specified columns, enabling aggregate functions per group",
+      "Filters groups after aggregation",
+      "Joins two tables on the specified columns"
+    ],
+    "answer": "Groups rows that share the same values in specified columns, enabling aggregate functions per group",
+    "explanation": "`GROUP BY` collapses multiple rows into summary rows. Aggregate functions like `COUNT`, `SUM`, `AVG` operate on each group."
+  },
+  {
+    "id": "sql_006",
+    "skill_slug": "sql",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is a database index and why is it used?",
+    "options": [
+      "A copy of a table stored in a different database",
+      "A data structure that improves the speed of data retrieval at the cost of additional storage and write overhead",
+      "A constraint that enforces uniqueness on a column",
+      "A view that caches query results"
+    ],
+    "answer": "A data structure that improves the speed of data retrieval at the cost of additional storage and write overhead",
+    "explanation": "Indexes (typically B-trees) allow the database engine to find rows without a full table scan, dramatically speeding up `SELECT` queries on indexed columns."
+  },
+  {
+    "id": "sql_007",
+    "skill_slug": "sql",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is a subquery (nested query)?",
+    "options": [
+      "A query that calls a stored procedure",
+      "A query nested inside another SQL query, used in WHERE, FROM, or SELECT clauses",
+      "A query that spans multiple databases",
+      "A query with more than three JOIN clauses"
+    ],
+    "answer": "A query nested inside another SQL query, used in WHERE, FROM, or SELECT clauses",
+    "explanation": "Subqueries allow complex logic like filtering on aggregated values or deriving intermediate result sets."
+  },
+  {
+    "id": "sql_008",
+    "skill_slug": "sql",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is a window function in SQL and how does it differ from GROUP BY?",
+    "options": [
+      "A window function aggregates rows and collapses them like GROUP BY",
+      "A window function performs calculations across a set of related rows without collapsing them, preserving the original row count",
+      "A window function is used only for ranking operations",
+      "Window functions are faster versions of GROUP BY"
+    ],
+    "answer": "A window function performs calculations across a set of related rows without collapsing them, preserving the original row count",
+    "explanation": "Window functions (using `OVER`) like `ROW_NUMBER`, `RANK`, `SUM OVER` compute across a 'window' of rows related to the current row, keeping every row in the output."
+  },
+  {
+    "id": "sql_009",
+    "skill_slug": "sql",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What does ACID stand for in database transactions?",
+    "options": [
+      "Atomicity, Consistency, Isolation, Durability",
+      "Access, Control, Integrity, Distribution",
+      "Availability, Consistency, Isolation, Delivery",
+      "Atomicity, Concurrency, Indexing, Durability"
+    ],
+    "answer": "Atomicity, Consistency, Isolation, Durability",
+    "explanation": "ACID properties guarantee reliable transaction processing: all-or-nothing (Atomicity), valid state transitions (Consistency), concurrent transaction independence (Isolation), and persistent commits (Durability)."
+  },
+  {
+    "id": "sql_010",
+    "skill_slug": "sql",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is a Common Table Expression (CTE) and when would you use one?",
+    "options": [
+      "A temporary stored procedure scoped to a session",
+      "A named temporary result set defined with `WITH` that can be referenced in the main query, improving readability and enabling recursion",
+      "A materialized view refreshed on a schedule",
+      "An index created temporarily for a single query"
+    ],
+    "answer": "A named temporary result set defined with `WITH` that can be referenced in the main query, improving readability and enabling recursion",
+    "explanation": "CTEs (defined with `WITH ... AS (...)`) improve query readability, allow reuse within a query, and support recursive queries for hierarchical data."
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Python Backend Developer",
+    "description": "Builds server-side applications and APIs using Python frameworks such as FastAPI, Django, or Flask.",
+    "category": "Software Engineering"
+  },
+  {
+    "id": 2,
+    "title": "Machine Learning Engineer",
+    "description": "Designs, trains, and deploys machine learning models to solve real-world problems at scale.",
+    "category": "Artificial Intelligence"
+  },
+  {
+    "id": 3,
+    "title": "Deep Learning Researcher",
+    "description": "Researches and implements neural network architectures for computer vision, NLP, and other domains.",
+    "category": "Artificial Intelligence"
+  },
+  {
+    "id": 4,
+    "title": "Frontend Developer",
+    "description": "Crafts responsive, accessible, and performant user interfaces using modern JavaScript and React.",
+    "category": "Software Engineering"
+  },
+  {
+    "id": 5,
+    "title": "Full-Stack Developer",
+    "description": "Works across the entire stack — frontend, backend APIs, and databases — to deliver end-to-end features.",
+    "category": "Software Engineering"
+  },
+  {
+    "id": 6,
+    "title": "Data Engineer",
+    "description": "Builds and maintains data pipelines, warehouses, and infrastructure to support analytics and ML.",
+    "category": "Data"
+  },
+  {
+    "id": 7,
+    "title": "Data Analyst",
+    "description": "Queries, visualizes, and interprets data to drive business decisions using SQL and BI tools.",
+    "category": "Data"
+  }
+]

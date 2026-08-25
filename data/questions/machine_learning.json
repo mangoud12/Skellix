@@ -1,0 +1,147 @@
+[
+  {
+    "id": "ml_001",
+    "skill_slug": "machine_learning",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "Which of the following is an example of supervised learning?",
+    "options": [
+      "K-Means Clustering",
+      "Principal Component Analysis",
+      "Linear Regression",
+      "Autoencoders"
+    ],
+    "answer": "Linear Regression",
+    "explanation": "Supervised learning requires labeled training data. Linear Regression learns a mapping from inputs to labeled outputs."
+  },
+  {
+    "id": "ml_002",
+    "skill_slug": "machine_learning",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What does 'overfitting' mean in the context of machine learning?",
+    "options": [
+      "The model performs well on training data but poorly on unseen data",
+      "The model performs poorly on both training and test data",
+      "The model trains too slowly",
+      "The model has too few parameters"
+    ],
+    "answer": "The model performs well on training data but poorly on unseen data",
+    "explanation": "Overfitting occurs when a model memorizes training data including its noise, losing the ability to generalize."
+  },
+  {
+    "id": "ml_003",
+    "skill_slug": "machine_learning",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is the purpose of a train/test split?",
+    "options": [
+      "To speed up training",
+      "To evaluate how well the model generalizes to unseen data",
+      "To reduce the dataset size",
+      "To balance class distributions"
+    ],
+    "answer": "To evaluate how well the model generalizes to unseen data",
+    "explanation": "Holding out a test set gives an unbiased estimate of the model's real-world performance."
+  },
+  {
+    "id": "ml_004",
+    "skill_slug": "machine_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What does the 'bias-variance tradeoff' describe?",
+    "options": [
+      "The tradeoff between model accuracy and training speed",
+      "The balance between underfitting (high bias) and overfitting (high variance)",
+      "The balance between data size and model complexity",
+      "The tradeoff between precision and recall"
+    ],
+    "answer": "The balance between underfitting (high bias) and overfitting (high variance)",
+    "explanation": "High bias means the model underfits; high variance means it overfits. Good models balance both."
+  },
+  {
+    "id": "ml_005",
+    "skill_slug": "machine_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "Which metric is most suitable for evaluating a classifier on an imbalanced dataset?",
+    "options": ["Accuracy", "F1 Score", "Mean Squared Error", "R-squared"],
+    "answer": "F1 Score",
+    "explanation": "Accuracy is misleading on imbalanced data. F1 Score balances precision and recall and is more informative."
+  },
+  {
+    "id": "ml_006",
+    "skill_slug": "machine_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is k-fold cross-validation?",
+    "options": [
+      "Splitting data into k equal parts and training k models, each tested on a different fold",
+      "Running the model k times on the same data",
+      "Using k different algorithms and averaging their results",
+      "Selecting the top k features for training"
+    ],
+    "answer": "Splitting data into k equal parts and training k models, each tested on a different fold",
+    "explanation": "K-fold CV provides a robust estimate of model performance by ensuring every sample is used for both training and testing."
+  },
+  {
+    "id": "ml_007",
+    "skill_slug": "machine_learning",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the role of a regularization term (like L2) in a loss function?",
+    "options": [
+      "To speed up gradient descent",
+      "To penalize large model weights and reduce overfitting",
+      "To normalize input features",
+      "To increase model complexity"
+    ],
+    "answer": "To penalize large model weights and reduce overfitting",
+    "explanation": "L2 regularization (Ridge) adds $$\\lambda \\sum w_i^2$$ to the loss, discouraging large weights and improving generalization."
+  },
+  {
+    "id": "ml_008",
+    "skill_slug": "machine_learning",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "In a Random Forest, what is the purpose of 'feature bagging' (random feature subsets)?",
+    "options": [
+      "To reduce training time by using fewer features",
+      "To decorrelate the trees and reduce ensemble variance",
+      "To handle missing values automatically",
+      "To increase individual tree accuracy"
+    ],
+    "answer": "To decorrelate the trees and reduce ensemble variance",
+    "explanation": "By restricting each split to a random feature subset, trees become less correlated, which reduces variance when averaging predictions."
+  },
+  {
+    "id": "ml_009",
+    "skill_slug": "machine_learning",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What distinguishes gradient boosting from bagging (e.g., Random Forest)?",
+    "options": [
+      "Bagging builds trees sequentially; boosting builds them in parallel",
+      "Boosting builds trees sequentially, each correcting the residuals of the previous; bagging builds trees in parallel independently",
+      "Boosting uses more trees than bagging",
+      "Bagging uses regression trees; boosting uses classification trees"
+    ],
+    "answer": "Boosting builds trees sequentially, each correcting the residuals of the previous; bagging builds trees in parallel independently",
+    "explanation": "In gradient boosting each new tree fits the residuals of the ensemble so far. Bagging trains independent trees in parallel and averages."
+  },
+  {
+    "id": "ml_010",
+    "skill_slug": "machine_learning",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the kernel trick in Support Vector Machines?",
+    "options": [
+      "A method to reduce training time by approximating the SVM solution",
+      "A technique to implicitly map data to a higher-dimensional space without computing the transformation explicitly",
+      "A way to select the optimal regularization parameter C",
+      "A preprocessing step to normalize support vectors"
+    ],
+    "answer": "A technique to implicitly map data to a higher-dimensional space without computing the transformation explicitly",
+    "explanation": "The kernel trick computes dot products in a transformed feature space using kernel functions (e.g., RBF), enabling non-linear decision boundaries without the cost of explicit transformation."
+  }
+]

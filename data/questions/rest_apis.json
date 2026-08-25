@@ -1,0 +1,142 @@
+[
+  {
+    "id": "api_001",
+    "skill_slug": "rest_apis",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What does REST stand for?",
+    "options": [
+      "Remote Execution State Transfer",
+      "Representational State Transfer",
+      "Relational Encoding Standard Technology",
+      "Resource Exchange and State Technology"
+    ],
+    "answer": "Representational State Transfer",
+    "explanation": "REST is an architectural style for distributed hypermedia systems. It was defined by Roy Fielding in his 2000 doctoral dissertation."
+  },
+  {
+    "id": "api_002",
+    "skill_slug": "rest_apis",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "Which HTTP method is used to create a new resource?",
+    "options": ["GET", "PUT", "POST", "PATCH"],
+    "answer": "POST",
+    "explanation": "`POST` is conventionally used to create a new resource. The server assigns the resource URI and returns it (typically with a 201 Created status)."
+  },
+  {
+    "id": "api_003",
+    "skill_slug": "rest_apis",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What HTTP status code indicates a successful resource creation?",
+    "options": ["200 OK", "204 No Content", "201 Created", "202 Accepted"],
+    "answer": "201 Created",
+    "explanation": "201 Created indicates that the request succeeded and a new resource was created as a result."
+  },
+  {
+    "id": "api_004",
+    "skill_slug": "rest_apis",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the difference between PUT and PATCH?",
+    "options": [
+      "PUT partially updates a resource; PATCH fully replaces it",
+      "PUT fully replaces a resource with the request body; PATCH applies a partial update",
+      "They are semantically identical",
+      "PUT is idempotent; PATCH is not — they differ only in safety"
+    ],
+    "answer": "PUT fully replaces a resource with the request body; PATCH applies a partial update",
+    "explanation": "`PUT` is idempotent and replaces the entire resource. `PATCH` sends only the fields to change, leaving the rest intact."
+  },
+  {
+    "id": "api_005",
+    "skill_slug": "rest_apis",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What does 'statelessness' mean in REST?",
+    "options": [
+      "The server stores all session state in a database",
+      "Each request from a client must contain all the information needed to understand and process it — the server stores no client session state",
+      "The client stores no data locally",
+      "API responses are never cached"
+    ],
+    "answer": "Each request from a client must contain all the information needed to understand and process it — the server stores no client session state",
+    "explanation": "Statelessness is a core REST constraint. It improves scalability because any server can handle any request without shared session state."
+  },
+  {
+    "id": "api_006",
+    "skill_slug": "rest_apis",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the purpose of JWT (JSON Web Token) in REST API authentication?",
+    "options": [
+      "To encrypt the API response body",
+      "To carry claims (identity, roles) in a compact, signed token that clients send with requests to prove authentication",
+      "To store user session data on the server",
+      "To rate-limit API requests"
+    ],
+    "answer": "To carry claims (identity, roles) in a compact, signed token that clients send with requests to prove authentication",
+    "explanation": "JWTs are self-contained: the server can verify them by checking the signature without a database lookup, enabling stateless authentication."
+  },
+  {
+    "id": "api_007",
+    "skill_slug": "rest_apis",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is CORS and why does it matter for REST APIs?",
+    "options": [
+      "A compression standard for API responses",
+      "A browser security mechanism that restricts cross-origin HTTP requests, requiring servers to explicitly allow them",
+      "A caching strategy for API responses",
+      "A protocol for encrypting API traffic"
+    ],
+    "answer": "A browser security mechanism that restricts cross-origin HTTP requests, requiring servers to explicitly allow them",
+    "explanation": "CORS (Cross-Origin Resource Sharing) uses HTTP headers to tell browsers which origins are permitted to access the API."
+  },
+  {
+    "id": "api_008",
+    "skill_slug": "rest_apis",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What does 'idempotency' mean for HTTP methods?",
+    "options": [
+      "The method always returns the same response body",
+      "Making the same request multiple times has the same effect on the server as making it once",
+      "The method cannot change any server state",
+      "The method is safe to call without authentication"
+    ],
+    "answer": "Making the same request multiple times has the same effect on the server as making it once",
+    "explanation": "GET, PUT, DELETE, HEAD are idempotent. POST is not — multiple identical POST requests may create multiple resources."
+  },
+  {
+    "id": "api_009",
+    "skill_slug": "rest_apis",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is HATEOAS in the context of REST?",
+    "options": [
+      "A REST API security standard",
+      "A REST maturity level where API responses include hypermedia links that guide the client through available actions",
+      "An HTTP caching strategy for APIs",
+      "A versioning scheme for REST APIs"
+    ],
+    "answer": "A REST maturity level where API responses include hypermedia links that guide the client through available actions",
+    "explanation": "HATEOAS (Hypermedia As The Engine Of Application State) allows clients to navigate the API dynamically through links embedded in responses, without prior knowledge of endpoints."
+  },
+  {
+    "id": "api_010",
+    "skill_slug": "rest_apis",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the Richardson Maturity Model?",
+    "options": [
+      "A model for measuring REST API response time",
+      "A model with 4 levels (0-3) describing how RESTful an API is, from plain HTTP to full HATEOAS",
+      "A security model for classifying API threat levels",
+      "A versioning strategy for REST APIs"
+    ],
+    "answer": "A model with 4 levels (0-3) describing how RESTful an API is, from plain HTTP to full HATEOAS",
+    "explanation": "Level 0: single URI; Level 1: multiple resources; Level 2: HTTP verbs and status codes; Level 3: HATEOAS. Most production APIs target Level 2."
+  }
+]

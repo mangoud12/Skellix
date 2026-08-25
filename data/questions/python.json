@@ -1,0 +1,132 @@
+[
+  {
+    "id": "py_001",
+    "skill_slug": "python",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What is the output of `type([])` in Python?",
+    "options": [
+      "<class 'list'>",
+      "<class 'array'>",
+      "<class 'tuple'>",
+      "<class 'dict'>"
+    ],
+    "answer": "<class 'list'>",
+    "explanation": "The built-in `type()` function returns the type of the object. An empty `[]` literal creates a list."
+  },
+  {
+    "id": "py_002",
+    "skill_slug": "python",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "Which of the following is an immutable data type in Python?",
+    "options": ["list", "dict", "tuple", "set"],
+    "answer": "tuple",
+    "explanation": "Tuples are immutable sequences — their contents cannot be changed after creation."
+  },
+  {
+    "id": "py_003",
+    "skill_slug": "python",
+    "difficulty": "beginner",
+    "points": 1,
+    "question": "What keyword is used to define a function in Python?",
+    "options": ["func", "define", "def", "function"],
+    "answer": "def",
+    "explanation": "The `def` keyword introduces a function definition in Python."
+  },
+  {
+    "id": "py_004",
+    "skill_slug": "python",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What does the `*args` syntax do in a Python function definition?",
+    "options": [
+      "Passes keyword arguments as a dictionary",
+      "Passes positional arguments as a tuple",
+      "Multiplies arguments together",
+      "Creates a generator of arguments"
+    ],
+    "answer": "Passes positional arguments as a tuple",
+    "explanation": "`*args` collects extra positional arguments into a tuple inside the function."
+  },
+  {
+    "id": "py_005",
+    "skill_slug": "python",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is the result of `[x**2 for x in range(4)]`?",
+    "options": [
+      "[1, 4, 9, 16]",
+      "[0, 1, 4, 9]",
+      "[0, 1, 2, 3]",
+      "[1, 2, 3, 4]"
+    ],
+    "answer": "[0, 1, 4, 9]",
+    "explanation": "`range(4)` yields 0,1,2,3. Squaring each gives 0,1,4,9."
+  },
+  {
+    "id": "py_006",
+    "skill_slug": "python",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "Which method removes and returns the last item from a Python list?",
+    "options": ["remove()", "delete()", "pop()", "discard()"],
+    "answer": "pop()",
+    "explanation": "`list.pop()` without an argument removes and returns the last element."
+  },
+  {
+    "id": "py_007",
+    "skill_slug": "python",
+    "difficulty": "intermediate",
+    "points": 2,
+    "question": "What is a Python decorator?",
+    "options": [
+      "A class that inherits from another class",
+      "A function that wraps another function to extend its behavior",
+      "A syntax for defining class attributes",
+      "A method for formatting strings"
+    ],
+    "answer": "A function that wraps another function to extend its behavior",
+    "explanation": "Decorators are higher-order functions applied with `@` syntax to modify or extend the behavior of functions or classes."
+  },
+  {
+    "id": "py_008",
+    "skill_slug": "python",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the output of the following code?\n\n```python\ndef gen():\n    yield 1\n    yield 2\ng = gen()\nprint(next(g))\nprint(next(g))\n```",
+    "options": ["1\\n1", "1\\n2", "2\\n1", "Error"],
+    "answer": "1\\n2",
+    "explanation": "`gen()` is a generator function. Each call to `next()` resumes execution until the next `yield`."
+  },
+  {
+    "id": "py_009",
+    "skill_slug": "python",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What is the difference between `__str__` and `__repr__` in Python?",
+    "options": [
+      "They are identical",
+      "`__str__` is for human-readable output; `__repr__` is for unambiguous/developer-facing output",
+      "`__repr__` is for human-readable output; `__str__` is for unambiguous output",
+      "`__str__` only works on strings; `__repr__` works on all types"
+    ],
+    "answer": "`__str__` is for human-readable output; `__repr__` is for unambiguous/developer-facing output",
+    "explanation": "`__str__` is called by `str()` and `print()`. `__repr__` aims to be unambiguous and is called by `repr()` and in the REPL."
+  },
+  {
+    "id": "py_010",
+    "skill_slug": "python",
+    "difficulty": "advanced",
+    "points": 3,
+    "question": "What does the `@staticmethod` decorator do?",
+    "options": [
+      "Creates a method that receives the class as its first argument",
+      "Creates a method that cannot be overridden",
+      "Creates a method that does not receive the instance or class as an implicit first argument",
+      "Creates a method that is called automatically on instantiation"
+    ],
+    "answer": "Creates a method that does not receive the instance or class as an implicit first argument",
+    "explanation": "A static method is a regular function namespaced in the class. It receives neither `self` nor `cls`."
+  }
+]

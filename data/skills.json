@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "name": "Python",
+    "slug": "python",
+    "description": "Core Python programming: syntax, data structures, OOP, and standard library usage.",
+    "category": "Programming"
+  },
+  {
+    "id": 2,
+    "name": "Machine Learning",
+    "slug": "machine_learning",
+    "description": "Supervised and unsupervised learning algorithms, model evaluation, and scikit-learn.",
+    "category": "AI/ML"
+  },
+  {
+    "id": 3,
+    "name": "Deep Learning",
+    "slug": "deep_learning",
+    "description": "Neural networks, backpropagation, CNNs, RNNs, and frameworks like PyTorch and TensorFlow.",
+    "category": "AI/ML"
+  },
+  {
+    "id": 4,
+    "name": "JavaScript",
+    "slug": "javascript",
+    "description": "Modern JavaScript (ES6+), asynchronous programming, DOM manipulation, and the event loop.",
+    "category": "Programming"
+  },
+  {
+    "id": 5,
+    "name": "React",
+    "slug": "react",
+    "description": "Component-based UI development with React, hooks, state management, and the ecosystem.",
+    "category": "Frontend"
+  },
+  {
+    "id": 6,
+    "name": "SQL",
+    "slug": "sql",
+    "description": "Relational database querying, joins, aggregations, indexing, and schema design.",
+    "category": "Data"
+  },
+  {
+    "id": 7,
+    "name": "REST APIs",
+    "slug": "rest_apis",
+    "description": "Designing and consuming RESTful APIs: HTTP methods, status codes, authentication, and versioning.",
+    "category": "Backend"
+  }
+]
