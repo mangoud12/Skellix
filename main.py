@@ -1,157 +1,166 @@
 # main.py
-# ─────────────────────────────────────────────────────────────────────────────
-# FastAPI application entry point.
-# Handles: app creation, middleware, router registration, startup/shutdown.
-# ─────────────────────────────────────────────────────────────────────────────
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from __future__ import annotations
+
 from contextlib import asynccontextmanager
-import logging
-import sys
+from typing import AsyncIterator
 
-from config import get_settings
-from database import init_db, verify_db_connection
+import uvicorn
+from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import JSONResponse
 
-# ── Router Imports ─────────────────────────────────────────────────────────────
-# Imported after app creation to avoid circular imports
-from routers import careers, assessments, results
-
-# ── Logging Configuration ─────────────────────────────────────────────────────
-# Structured logging setup — consistent format across all modules
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
-)
-logger = logging.getLogger(__name__)
-settings = get_settings()
+from routers import assessment, careers, questions, roadmap
 
 
-# ── Lifespan Handler ───────────────────────────────────────────────────────────
-# The modern FastAPI way to handle startup and shutdown logic.
-# Replaces the deprecated @app.on_event("startup") / @app.on_event("shutdown")
+# ---------------------------------------------------------------------------
+# Application lifecycle
+# ---------------------------------------------------------------------------
+
+
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    # ── STARTUP ───────────────────────────────────────────────────────────────
-    logger.info("=" * 60)
-    logger.info(f"🚀 Starting {settings.APP_NAME} v{settings.APP_VERSION}")
-    logger.info("=" * 60)
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    """
+    Manage application startup and shutdown events.
 
-    # 1. Verify database connectivity
-    verify_db_connection()
+    Add DB connection pools, cache warm-up, or background workers here.
+    """
+    # --- Startup ---
+    print("[skillix] Starting up...")
+    # e.g. await db.connect()
+    # e.g. await cache.ping()
 
-    # 2. Create all tables (safe to call even if tables already exist)
-    init_db()
+    yield  # Application runs here
 
-    # 3. Warn if AI is not configured (non-fatal — AI is optional)
-    if not settings.OPENAI_API_KEY:
-        logger.warning(
-            "⚠️  OPENAI_API_KEY not set. "
-            "AI enhancement layer will be DISABLED. "
-            "Core assessment functionality is unaffected."
+    # --- Shutdown ---
+    print("[skillix] Shutting down...")
+    # e.g. await db.disconnect()
+
+
+# ---------------------------------------------------------------------------
+# App factory
+# ---------------------------------------------------------------------------
+
+
+def create_app() -> FastAPI:
+    app = FastAPI(
+        title="Skillix API",
+        summary="AI-powered skill learning platform — career paths, assessments & roadmaps.",
+        description=(
+            "## Skillix\n\n"
+            "Skillix helps learners discover career paths, assess their current skill level, "
+            "and generate personalised week-by-week learning roadmaps.\n\n"
+            "### Key Features\n"
+            "- **Career Paths** — Browse and search curated career tracks.\n"
+            "- **Questions** — Skill-specific assessment questions by topic and difficulty.\n"
+            "- **Assessment** — Timed, scored assessment sessions with per-question feedback.\n"
+            "- **Roadmap** — AI-generated, pace-aware learning roadmaps with curated resources.\n"
+        ),
+        version="0.1.0",
+        contact={
+            "name": "Skillix Engineering",
+            "email": "engineering@skillix.io",
+        },
+        license_info={
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT",
+        },
+        lifespan=lifespan,
+        docs_url="/docs",
+        redoc_url="/redoc",
+        openapi_url="/openapi.json",
+    )
+
+    # -----------------------------------------------------------------------
+    # Middleware
+    # -----------------------------------------------------------------------
+
+    # CORS — tighten origins for production
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],          # Replace with specific origins in prod
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    # Compress large responses automatically
+    app.add_middleware(GZipMiddleware, minimum_size=1000)
+
+    # -----------------------------------------------------------------------
+    # Global exception handlers
+    # -----------------------------------------------------------------------
+
+    @app.exception_handler(ValueError)
+    async def value_error_handler(request: Request, exc: ValueError) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content={"detail": str(exc)},
         )
-    else:
-        logger.info("✅ AI service configured (OpenAI)")
 
-    logger.info(f"🌐 API running — Docs available at: /docs")
-    logger.info("=" * 60)
+    @app.exception_handler(Exception)
+    async def generic_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+        # In production, log the traceback to Sentry / Datadog here
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "An unexpected internal error occurred."},
+        )
 
-    yield  # Application is running
+    # -----------------------------------------------------------------------
+    # Routers
+    # -----------------------------------------------------------------------
 
-    # ── SHUTDOWN ──────────────────────────────────────────────────────────────
-    logger.info("🛑 Skellix API shutting down gracefully.")
+    app.include_router(careers.router)
+    app.include_router(questions.router)
+    app.include_router(assessment.router)
+    app.include_router(roadmap.router)
 
+    # -----------------------------------------------------------------------
+    # Health & meta endpoints
+    # -----------------------------------------------------------------------
 
-# ── Application Factory ────────────────────────────────────────────────────────
-app = FastAPI(
-    title=settings.APP_NAME,
-    version=settings.APP_VERSION,
-    description=settings.APP_DESCRIPTION,
-    # Disable docs in production — for MVP, keep them enabled
-    docs_url="/docs" if settings.DEBUG else None,
-    redoc_url="/redoc" if settings.DEBUG else None,
-    openapi_url="/openapi.json" if settings.DEBUG else None,
-    lifespan=lifespan,
-)
+    @app.get(
+        "/",
+        tags=["Health"],
+        summary="Root",
+        include_in_schema=False,
+    )
+    async def root() -> dict[str, str]:
+        return {"service": "skillix-api", "status": "ok", "version": "0.1.0"}
 
+    @app.get(
+        "/health",
+        tags=["Health"],
+        summary="Health check",
+        description="Lightweight liveness probe for load balancers and container orchestrators.",
+    )
+    async def health_check() -> dict[str, str]:
+        return {"status": "healthy"}
 
-# ── CORS Middleware ────────────────────────────────────────────────────────────
-# Required so Adam's frontend (running on a different port) can call our API.
-# For MVP, we allow all origins. Lock this down before any real deployment.
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],          # TODO: Replace with Adam's frontend URL in prod
-    allow_credentials=True,
-    allow_methods=["*"],          # Allow GET, POST, PUT, DELETE, OPTIONS
-    allow_headers=["*"],          # Allow all headers including custom ones
-)
+    @app.get(
+        "/ping",
+        tags=["Health"],
+        summary="Ping",
+        include_in_schema=False,
+    )
+    async def ping() -> dict[str, str]:
+        return {"ping": "pong"}
 
-
-# ── Router Registration ────────────────────────────────────────────────────────
-# All routes are prefixed with /api for clarity and future versioning.
-# Tags group routes in the /docs Swagger UI — very helpful for the team.
-
-app.include_router(
-    careers.router,
-    prefix="/api/careers",
-    tags=["Careers"],
-)
-
-app.include_router(
-    assessments.router,
-    prefix="/api/assessments",
-    tags=["Assessments"],
-)
-
-app.include_router(
-    results.router,
-    prefix="/api/results",
-    tags=["Results"],
-)
+    return app
 
 
-# ── Root Health Check ─────────────────────────────────────────────────────────
-@app.get("/", tags=["Health"], summary="Root health check")
-def root():
-    """
-    Simple health check endpoint.
-    Returns app info — useful for deployment verification and monitoring.
-    Adam can ping this to verify the backend is reachable before making
-    any real API calls.
-    """
-    return JSONResponse(content={
-        "app": settings.APP_NAME,
-        "version": settings.APP_VERSION,
-        "status": "operational",
-        "ai_enabled": settings.OPENAI_API_KEY is not None,
-        "docs": "/docs",
-    })
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
 
+app = create_app()
 
-@app.get("/health", tags=["Health"], summary="Detailed health check")
-def health_check():
-    """
-    Detailed health status — can be extended later to check DB, AI, etc.
-    """
-    from database import engine
-    from sqlalchemy import text
-
-    db_status = "connected"
-    try:
-        with engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
-    except Exception as e:
-        db_status = f"error: {str(e)}"
-
-    return JSONResponse(content={
-        "status": "healthy" if db_status == "connected" else "degraded",
-        "services": {
-            "database": db_status,
-            "ai": "enabled" if settings.OPENAI_API_KEY else "disabled (fallback active)",
-        }
-    })
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,           # Disable in production
+        log_level="info",
+    )
