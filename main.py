@@ -11,7 +11,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 
-from routers import assessment, careers, questions, roadmap
+from routers import assessment, careers, questions, roadmap, mvp
+from routers import auth
+from database import init_db, verify_db_connection
 
 
 # ---------------------------------------------------------------------------
@@ -28,8 +30,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """
     # --- Startup ---
     print("[skillix] Starting up...")
-    # e.g. await db.connect()
-    # e.g. await cache.ping()
+    verify_db_connection()
+    init_db()
 
     yield  # Application runs here
 
@@ -79,7 +81,10 @@ def create_app() -> FastAPI:
     # CORS — tighten origins for production
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],          # Replace with specific origins in prod
+        allow_origins=[
+            "http://127.0.0.1:5173",
+            "http://localhost:5173",
+        ],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -115,6 +120,8 @@ def create_app() -> FastAPI:
     app.include_router(questions.router)
     app.include_router(assessment.router)
     app.include_router(roadmap.router)
+    app.include_router(mvp.router)
+    app.include_router(auth.router)
 
     # -----------------------------------------------------------------------
     # Health & meta endpoints

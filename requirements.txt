@@ -8,6 +8,10 @@ pydantic-settings==2.5.2
 # Database
 sqlalchemy==2.0.35
 alembic==1.13.3        # For future schema migrations
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+PyJWT==2.9.0
+email-validator==2.2.0
 
 # AI Service
 openai==1.50.0

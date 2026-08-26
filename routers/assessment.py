@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Path, status
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Path, Response, status
 from pydantic import BaseModel, Field
 
 from models.assessment import (
@@ -169,7 +169,7 @@ async def get_assessment_status(
 )
 async def abandon_assessment(
     session_id: Annotated[str, Path(description="Session ID to abandon")],
-) -> None:
+) -> Response:
     session = get_session_by_id(session_id)
     if session is None:
         raise HTTPException(
@@ -183,3 +183,4 @@ async def abandon_assessment(
         )
     # Delegate state mutation to logic layer
     session.status = AssessmentStatus.EXPIRED
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

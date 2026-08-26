@@ -9,6 +9,15 @@ from pydantic import BaseModel, Field
 from typing import Literal
 
 
+class RoadmapGenerateRequest(BaseModel):
+    topic: str = Field(min_length=2, max_length=120)
+    experience: Literal["none", "beginner", "intermediate", "advanced"] = "beginner"
+    pace: Literal["slow", "moderate", "fast", "intensive"] = "moderate"
+    free_only: bool = False
+    goal: str | None = Field(default=None, max_length=500)
+    target_weeks: int | None = Field(default=None, ge=1, le=520)
+
+
 class Resource(BaseModel):
     """A learning resource attached to a roadmap step."""
     url: str

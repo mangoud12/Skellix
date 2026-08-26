@@ -1,12 +1,4 @@
 # models/result.py
-# ─────────────────────────────────────────────────────────────────────────────
-# Result: The computed output of a completed assessment.
-# Roadmap: The personalized learning plan generated from the result.
-#
-# KEY DESIGN: ai_feedback is NULLABLE — the app works fully without it.
-# Ahmed Ali's logic engine populates the deterministic fields.
-# The AI service optionally enriches ai_feedback and roadmap.ai_enhanced.
-# ─────────────────────────────────────────────────────────────────────────────
 
 import enum
 from sqlalchemy import (
@@ -20,15 +12,10 @@ from database import Base
 
 
 class ReadinessLevel(str, enum.Enum):
-    """
-    Overall career readiness classification.
-    Ahmed Ali's scoring engine determines which level to assign
-    based on the overall_score and skill_scores.
-    """
-    BEGINNER     = "beginner"      # 0–40%
-    INTERMEDIATE = "intermediate"  # 41–65%
-    ADVANCED     = "advanced"      # 66–85%
-    READY        = "ready"         # 86–100%
+    BEGINNER     = "beginner"     # 0–40%
+    INTERMEDIATE = "intermediate" # 41–65%
+    ADVANCED     = "advanced"     # 66–85%
+    READY        = "ready"        # 86–100%
 
 
 class Result(Base):
@@ -38,25 +25,15 @@ class Result(Base):
     assessment_id = Column(
         Integer,
         ForeignKey("assessments.id", ondelete="CASCADE"),
-        unique=True,           # One result per assessment — enforced at DB level
+        unique=True,
         nullable=False,
         index=True,
     )
 
-    # ── Deterministic Fields (set by Ahmed Ali's Logic Engine) ────────────────
-
-    # Weighted average score across all assessed skills (0.0 to 100.0)
     overall_score = Column(Float, nullable=False)
-
-    # Per-skill scores: {"python": 85.0, "machine_learning": 60.0, ...}
     skill_scores  = Column(JSON, nullable=False, default=dict)
-
-    # Arrays of skill slugs
-    strengths     = Column(JSON, nullable=False, default=list)  # Score >= threshold
-    weaknesses    = Column(JSON, nullable=False, default=list)  # Score < threshold
-
-    # Skills in the career that the user was tested on but scored poorly,
-    # OR skills they have not been tested on yet
+    strengths     = Column(JSON, nullable=False, default=list)
+    weaknesses    = Column(JSON, nullable=False, default=list)
     skill_gaps    = Column(JSON, nullable=False, default=list)
 
     level = Column(
@@ -65,10 +42,6 @@ class Result(Base):
         default=ReadinessLevel.BEGINNER,
     )
 
-    # ── AI-Enhanced Fields (nullable — fallback = None) ───────────────────────
-    # Populated asynchronously by ai_service.py AFTER the result is saved.
-    # If AI fails: these remain NULL and the frontend shows default text.
-    # Frontend should handle NULL gracefully: "AI insights unavailable."
     ai_feedback = Column(Text, nullable=True)
 
     created_at = Column(
@@ -79,12 +52,14 @@ class Result(Base):
 
     # ── Relationships ─────────────────────────────────────────────────────────
     assessment = relationship("Assessment", back_populates="result")
-    roadmap    = relationship(
+    
+    # تم تعديل الربط ليعتمد على assessment_id كربط غير مباشر
+    roadmap = relationship(
         "Roadmap",
-        back_populates="result",
+        primaryjoin="Result.assessment_id == Roadmap.assessment_id",
+        foreign_keys="[Roadmap.assessment_id]",
         uselist=False,
-        cascade="all, delete-orphan",
-        lazy="select",
+        viewonly=True,
     )
 
     def __repr__(self):
@@ -95,23 +70,6 @@ class Result(Base):
 
 
 class Roadmap(Base):
-    """
-    Personalized learning roadmap generated from the assessment result.
-    
-    steps JSON structure (array of step objects):
-    [
-        {
-            "order": 1,
-            "skill_slug": "deep_learning",
-            "title": "Master Deep Learning Fundamentals",
-            "priority": "high",
-            "reason": "Core skill gap identified — scored 30%",
-            "resources": [],        # Future: populated from a resources table
-            "ai_tip": null          # Populated by AI service if available
-        },
-        ...
-    ]
-    """
     __tablename__ = "roadmaps"
 
     id            = Column(Integer, primary_key=True, index=True)
@@ -127,11 +85,8 @@ class Roadmap(Base):
         nullable=False,
     )
 
-    # Ordered array of roadmap step objects (see docstring above)
-    steps         = Column(JSON, nullable=False, default=list)
-
-    # Was AI used to enrich the roadmap steps with ai_tip values?
-    ai_enhanced   = Column(Boolean, default=False, nullable=False)
+    steps       = Column(JSON, nullable=False, default=list)
+    ai_enhanced = Column(Boolean, default=False, nullable=False)
 
     created_at = Column(
         DateTime(timezone=True),
@@ -140,7 +95,13 @@ class Roadmap(Base):
     )
 
     # ── Relationships ─────────────────────────────────────────────────────────
-    result = relationship("Result", back_populates="roadmap")
+    result = relationship(
+        "Result",
+        primaryjoin="Roadmap.assessment_id == Result.assessment_id",
+        foreign_keys="[Result.assessment_id]",
+        uselist=False,
+        viewonly=True,
+    )
     career = relationship("Career")
 
     def __repr__(self):

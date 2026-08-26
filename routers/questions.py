@@ -8,7 +8,8 @@ from uuid import uuid4
 from fastapi import APIRouter, HTTPException, Query, status
 from pydantic import BaseModel, Field
 
-from models.question import Question, QuestionCategory, DifficultyLevel
+from models.question import QuestionCategory, DifficultyLevel
+from schemas.assessment import QuestionOut
 from logic.questions import (
     get_questions_for_topic,
     get_question_by_id,
@@ -37,11 +38,11 @@ class QuestionListResponse(BaseModel):
         description="Unique ID for this question fetch session.",
     )
     total: int
-    questions: list[Question]
+    questions: list[QuestionOut]
 
 
 class QuestionDetailResponse(BaseModel):
-    question: Question
+    question: QuestionOut
 
 
 # ---------------------------------------------------------------------------

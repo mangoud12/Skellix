@@ -38,6 +38,12 @@ class DifficultyLevel(str, enum.Enum):
     ADVANCED     = "advanced"
 
 
+class QuestionCategory(str, enum.Enum):
+    CONCEPTUAL = "conceptual"
+    PRACTICAL = "practical"
+    THEORY = "theory"
+
+
 class Question(Base):
     __tablename__ = "questions"
 

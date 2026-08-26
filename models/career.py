@@ -11,7 +11,20 @@ from sqlalchemy import (
     Boolean, Float, ForeignKey, UniqueConstraint
 )
 from sqlalchemy.orm import relationship
+from pydantic import BaseModel, Field
 from database import Base
+
+
+class CareerSummary(BaseModel):
+    id: str
+    title: str
+    slug: str
+    description: str
+    category: str = "General"
+
+
+class CareerPath(CareerSummary):
+    skills: list[str] = Field(default_factory=list)
 
 
 class Career(Base):

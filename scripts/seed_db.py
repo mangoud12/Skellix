@@ -22,10 +22,9 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from sqlalchemy.orm import Session
-from database import SessionLocal, engine, Base  # adjust import to your structure
-from models.career import Career
+from database import SessionLocal, engine, Base
+from models.career import Career, CareerSkill
 from models.skill import Skill
-from models.career_skill import CareerSkill
 from models.question import Question
 
 # ---------------------------------------------------------------------------
@@ -63,11 +62,17 @@ def seed_careers(db: Session) -> dict[int, Career]:
     data = load_json(DATA_DIR / "careers.json")
     id_map: dict[int, Career] = {}
     for item in data:
+        name_val = item.get("name") or item.get("title", "")
+        # توليد slug تلقائي فريد في حال كان فارغاً
+        raw_slug = item.get("slug")
+        slug_val = raw_slug if raw_slug else name_val.lower().replace(" ", "-").replace("_", "-")
+
         career = Career(
             id=item["id"],
-            title=item["title"],
-            description=item["description"],
-            category=item["category"],
+            name=name_val,
+            slug=slug_val,
+            description=item.get("description"),
+            icon=item.get("icon"),
         )
         db.add(career)
         id_map[item["id"]] = career
@@ -75,7 +80,6 @@ def seed_careers(db: Session) -> dict[int, Career]:
     db.flush()
     print(f"  [ok] Seeded {len(data)} careers.")
     return id_map
-
 
 def seed_skills(db: Session) -> dict[int, Skill]:
     """Seed Skill rows. Returns a dict keyed by original JSON id."""
@@ -90,8 +94,8 @@ def seed_skills(db: Session) -> dict[int, Skill]:
             id=item["id"],
             name=item["name"],
             slug=item["slug"],
-            description=item["description"],
-            category=item["category"],
+            description=item.get("description"),
+            category=item.get("category"),
         )
         db.add(skill)
         id_map[item["id"]] = skill
@@ -112,8 +116,9 @@ def seed_career_skills(db: Session) -> None:
         cs = CareerSkill(
             career_id=item["career_id"],
             skill_id=item["skill_id"],
-            importance=item["importance"],
-            weight=item["weight"],
+            is_core=item.get("is_core", item.get("importance") == "high"),
+            weight=item.get("weight", 1.0),
+            display_order=item.get("display_order", 1),
         )
         db.add(cs)
 
@@ -137,13 +142,11 @@ def seed_questions(db: Session) -> None:
         data = load_json(path)
         for item in data:
             question = Question(
-                slug=item["id"],                     # e.g. "py_001"
-                skill_slug=item["skill_slug"],
-                difficulty=item["difficulty"],
-                points=item["points"],
-                question_text=item["question"],
-                options=json.dumps(item["options"]), # store as JSON string
-                answer=item["answer"],
+                skill_id=item.get("skill_id", 1),
+                text=item.get("question") or item.get("text"),
+                type=item.get("type", "single"),
+                difficulty=item.get("difficulty", "medium"),
+                points=item.get("points", 10),
                 explanation=item.get("explanation", ""),
             )
             db.add(question)
@@ -162,7 +165,6 @@ def seed_questions(db: Session) -> None:
 def run_seed() -> None:
     print("\n=== Skillix DB Seeder ===\n")
 
-    # Create all tables if they don't exist yet
     Base.metadata.create_all(bind=engine)
     print("[step] Ensured all tables exist.\n")
 

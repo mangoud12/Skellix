@@ -6,6 +6,8 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 import enum
+from datetime import datetime
+from pydantic import BaseModel, Field
 from sqlalchemy import (
     Column, Integer, String, Text,
     DateTime, ForeignKey, JSON,
@@ -20,6 +22,34 @@ class AssessmentStatus(str, enum.Enum):
     IN_PROGRESS = "in_progress"
     COMPLETED   = "completed"
     ABANDONED   = "abandoned"  # Future: timeout/exit tracking
+    EXPIRED     = "expired"
+
+
+# API session contracts live alongside the persisted SQLAlchemy models.  The
+# distinct names avoid conflating transient API sessions with DB rows.
+class AssessmentQuestionOut(BaseModel):
+    id: str
+    question_text: str
+    options: list[str]
+    difficulty: str
+
+
+class AssessmentSession(BaseModel):
+    id: str
+    topic: str
+    experience: str
+    status: AssessmentStatus = AssessmentStatus.IN_PROGRESS
+    questions: list[AssessmentQuestionOut] = Field(default_factory=list)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class AssessmentResult(BaseModel):
+    score_percent: float
+    correct_count: int
+    total_questions: int
+    feedback: str = ""
+    mistakes: list[dict] = Field(default_factory=list)
+    skill_profile: dict[str, float] = Field(default_factory=dict)
 
 
 class Assessment(Base):

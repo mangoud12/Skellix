@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     # ── Security ─────────────────────────────────────────────────────────────
     # Secret key for session UUID signing (not critical for MVP but good habit)
     SECRET_KEY: str = "skellix-dev-secret-change-in-production"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRE_MINUTES: int = 1440
 
     class Config:
         # Reads from a .env file automatically if present

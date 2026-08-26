@@ -5,6 +5,7 @@
 # The session_id is stored in localStorage on the frontend (Adam's side).
 # ─────────────────────────────────────────────────────────────────────────────
 
+from uuid import uuid4
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -19,7 +20,12 @@ class User(Base):
     # session_id is the public-facing identifier — a UUID4 string.
     # This is what the frontend stores and sends with every request.
     # Example: "550e8400-e29b-41d4-a716-446655440000"
-    session_id = Column(String(36), unique=True, index=True, nullable=False)
+    # Retained for compatibility with existing anonymous assessment records.
+    session_id = Column(String(36), unique=True, index=True, nullable=False, default=lambda: str(uuid4()))
+
+    name = Column(String(120), nullable=False)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
 
     # Timestamps — server-generated, not client-provided
     created_at = Column(
@@ -37,4 +43,4 @@ class User(Base):
     )
 
     def __repr__(self):
-        return f"<User id={self.id} session_id='{self.session_id}'>"
+        return f"<User id={self.id} email='{self.email}'>"

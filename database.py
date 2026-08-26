@@ -4,7 +4,7 @@
 # WAL mode is enabled here at the engine level — applied once on first connect.
 # ─────────────────────────────────────────────────────────────────────────────
 
-from sqlalchemy import create_engine, event, text
+from sqlalchemy import create_engine, event, text, inspect
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from sqlalchemy.engine import Engine
 from config import get_settings
@@ -132,6 +132,20 @@ def init_db():
     import models.result      # noqa: F401
 
     Base.metadata.create_all(bind=engine)
+    # Lightweight compatibility migration for databases created before accounts
+    # were introduced. New installations receive the constraints from the model.
+    if "sqlite" in settings.DATABASE_URL:
+        columns = {column["name"] for column in inspect(engine).get_columns("users")}
+        additions = {
+            "name": "VARCHAR(120)",
+            "email": "VARCHAR(255)",
+            "password_hash": "VARCHAR(255)",
+        }
+        with engine.begin() as connection:
+            for name, definition in additions.items():
+                if name not in columns:
+                    connection.execute(text(f"ALTER TABLE users ADD COLUMN {name} {definition}"))
+            connection.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_email ON users (email)"))
     logger.info("✅ Database tables initialized successfully.")
 
 

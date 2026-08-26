@@ -12,7 +12,7 @@ from typing import Literal
 class QuestionOut(BaseModel):
     """A single question delivered to the client (no answer/explanation exposed)."""
 
-    id: int
+    id: str
     slug: str                         # e.g. "py_001"
     skill_slug: str
     difficulty: Literal["beginner", "intermediate", "advanced"]
@@ -52,3 +52,19 @@ class AssessmentSubmit(BaseModel):
 
     assessment_id: int
     answers: list[AnswerIn] = Field(min_length=1)
+
+
+class AssessmentStartRequest(BaseModel):
+    topic: str = Field(min_length=2, max_length=120)
+    experience: Literal["none", "beginner", "intermediate", "advanced"] = "beginner"
+    question_count: int = Field(default=8, ge=8, le=10, description="8–10 fresh questions per skill")
+    difficulty: Literal["beginner", "intermediate", "advanced"] | None = None
+
+
+class SubmittedAnswer(BaseModel):
+    question_id: str
+    selected_option: str
+
+
+class AssessmentSubmitRequest(BaseModel):
+    answers: list[SubmittedAnswer] = Field(min_length=1)
